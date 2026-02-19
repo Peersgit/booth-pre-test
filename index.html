@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boothr — Tech Stack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --border: #dde1ea;
+      --accent: #059669;
+      --accent2: #4f46e5;
+      --accent3: #db2777;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: rgba(5,150,105,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      padding: 60px 24px;
+      overflow-x: hidden;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      margin-bottom: 64px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    h1 span { color: var(--accent); }
+
+    .subtitle {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* ── FLOW DIAGRAM ── */
+    .diagram-section {
+      margin-bottom: 72px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .flow-node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 28px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+
+    .flow-node:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(5,150,105,0.12);
+    }
+
+    .flow-node.user {
+      border-color: var(--accent2);
+      box-shadow: 0 4px 16px rgba(79,70,229,0.1);
+    }
+    .flow-node.user:hover { box-shadow: 0 6px 24px rgba(79,70,229,0.18); }
+
+    .flow-node.django {
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px rgba(5,150,105,0.1);
+      min-width: 280px;
+    }
+
+    .node-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .node-role {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .node-badge {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-top: 6px;
+      letter-spacing: 0.1em;
+    }
+
+    .badge-purple { background: rgba(79,70,229,0.1); color: var(--accent2); }
+    .badge-green  { background: rgba(5,150,105,0.1); color: var(--accent); }
+    .badge-pink   { background: rgba(219,39,119,0.1); color: var(--accent3); }
+
+    /* Arrow */
+    .arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 48px;
+      justify-content: center;
+    }
+    .arrow-line {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(to bottom, var(--border), var(--accent));
+      position: relative;
+    }
+    .arrow-label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin: 4px 0;
+    }
+    .arrow-tip {
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 8px solid var(--accent);
+    }
+
+    /* Horizontal branch row */
+    .branch-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .branch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 220px;
+    }
+
+    .branch-arrow {
+      height: 40px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--border));
+    }
+
+    /* Connector line between django and branches */
+    .h-connector {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+      height: 40px;
+      justify-content: center;
+    }
+    .h-connector::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .h-connector .tick {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--border), transparent);
+    }
+
+    .tick-1 { left: 12%; }
+    .tick-2 { left: 50%; transform: translateX(-50%); }
+    .tick-3 { right: 12%; }
+
+    /* ── SERVICE CARDS ── */
+    .cards-section {
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+
+
+    .card.green::before { background: var(--accent); }
+    .card.purple::before { background: var(--accent2); }
+    .card.pink::before { background: var(--accent3); }
+    .card.orange::before { background: #ea580c; }
+
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+    }
+
+    .card-name a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed var(--border);
+      transition: border-color 0.2s;
+    }
+    .card-name a:hover { border-color: var(--accent); color: var(--accent); }
+
+    .card-cost {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .card-role {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card-role.green  { color: var(--accent); }
+    .card-role.purple { color: var(--accent2); }
+    .card-role.pink   { color: var(--accent3); }
+    .card-role.orange { color: #ea580c; }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .card-features {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .feature-tag {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.04);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .source-link:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── PRICING TABLES ── */
+    .pricing-section {
+      margin-top: 48px;
+      animation: fadeUp 0.6s 0.3s ease both;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .pricing-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .pricing-block-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .pricing-block-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .pricing-block-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .pricing-table thead tr {
+      background: rgba(0,0,0,0.03);
+    }
+
+    .pricing-table th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .pricing-table tbody tr:last-child td { border-bottom: none; }
+
+    .pricing-table tbody tr:hover { background: rgba(0,0,0,0.02); }
+
+    .tier-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .tier-price {
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .tier-price.free   { color: var(--accent); }
+    .tier-price.custom { color: var(--muted); font-style: italic; }
+
+    .tier-highlight {
+      background: rgba(5,150,105,0.05) !important;
+    }
+    .tier-highlight td:first-child {
+      border-left: 3px solid var(--accent);
+      padding-left: 13px;
+    }
+
+    .tier-badge {
+      display: inline-block;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 99px;
+      margin-left: 6px;
+      background: rgba(5,150,105,0.1);
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      vertical-align: middle;
+    }
+
+    /* Stripe fee table */
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      table-layout: fixed;
+    }
+
+    .fee-table thead tr { background: rgba(0,0,0,0.03); }
+
+    .fee-table th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Fixed column widths so nothing shifts on input change */
+    .fee-table th:nth-child(1),
+    .fee-table td:nth-child(1) { width: 28%; }
+    .fee-table th:nth-child(2),
+    .fee-table td:nth-child(2) { width: 34%; }
+    .fee-table th:nth-child(3),
+    .fee-table td:nth-child(3) { width: 18%; text-align: right; }
+    .fee-table th:nth-child(4),
+    .fee-table td:nth-child(4) { width: 20%; text-align: right; }
+
+    .fee-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: middle;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .fee-table tbody tr:last-child td { border-bottom: none; }
+
+    .fee-row-final {
+      background: rgba(219,39,119,0.04) !important;
+    }
+    .fee-row-final td {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--accent3);
+      border-top: 2px solid rgba(219,39,119,0.2);
+    }
+
+    .fee-added {
+      color: var(--accent3);
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .fee-running {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stripe-note {
+      padding: 16px 20px;
+      font-size: 12.5px;
+      color: var(--text);
+      border-top: 2px solid rgba(219,39,119,0.2);
+      background: rgba(219,39,119,0.04);
+      line-height: 1.75;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .branch-row { flex-direction: column; align-items: center; }
+      .h-connector { display: none; }
+      .branch-item { max-width: 100%; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="label">// Phase 0 — MVP Stack</div>
+    <h1>Boothr<span>.</span><br>Tech Architecture</h1>
+    <p class="subtitle">How every service connects, what it costs, and where to learn more. Built for a Django-first, mobile-friendly web app.</p>
+  </header>
+
+  <!-- DIAGRAM -->
+  <div class="diagram-section">
+    <div class="section-title">How It All Connects</div>
+    <div class="flow">
+
+      <!-- User -->
+      <div class="flow-node user" style="min-width:260px;">
+        <div class="node-name">User (Browser)</div>
+        <div class="node-role">Vendor or Crew — mobile-friendly web</div>
+        <span class="node-badge badge-purple">HTML / CSS / JS</span>
+      </div>
+
+      <div class="arrow">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">HTTP requests</div>
+        <div class="arrow-tip"></div>
+      </div>
+
+      <!-- Django -->
+      <div class="flow-node django">
+        <div class="node-name">Railway — Django App</div>
+        <div class="node-role">Business logic · API · Webhooks · Workers</div>
+        <span class="node-badge badge-green">The Brain</span>
+      </div>
+
+      <!-- Horizontal connector -->
+      <div class="h-connector">
+        <div class="tick tick-1"></div>
+        <div class="tick tick-2"></div>
+        <div class="tick tick-3"></div>
+      </div>
+
+      <!-- Three branches -->
+      <div class="branch-row">
+
+        <div class="branch-item">
+          <div class="branch-arrow"></div>
+          <div class="flow-node" style="width:100%; text-align:center;">
+            <div class="node-name" style="font-size:14px;">Supabase</div>
+            <div class="node-role">PostgreSQL · Auth · File Storage</div>
+            <span class="node-badge badge-green">Data Layer</span>
+          </div>
+        </div>
+
+        <div class="branch-item">
+          <div class="branch-arrow"></div>
+          <div class="flow-node" style="width:100%; text-align:center;">
+            <div class="node-name" style="font-size:14px;">Stripe Connect</div>
+            <div class="node-role">Payments · Payouts · 1099s</div>
+            <span class="node-badge badge-purple">Money Layer</span>
+          </div>
+        </div>
+
+        <div class="branch-item">
+          <div class="branch-arrow"></div>
+          <div class="flow-node" style="width:100%; text-align:center;">
+            <div class="node-name" style="font-size:14px;">Resend</div>
+            <div class="node-role">Transactional Email · Notifications</div>
+            <span class="node-badge badge-pink">Comms Layer</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICE CARDS -->
+  <div class="cards-section">
+    <div class="section-title">Services — Detail & Pricing</div>
+    <div class="cards-grid">
+
+      <!-- Supabase -->
+      <div class="card green">
+        <div class="card-header">
+          <div class="card-name"><a href="https://supabase.com/pricing" target="_blank">Supabase</a></div>
+          <div class="card-cost">$25/mo (Pro)</div>
+        </div>
+        <div class="card-role green">Database · Auth · Storage</div>
+        <div class="card-desc">Managed PostgreSQL, row-level security, built-in auth (email/OAuth), and file storage — all in one. Free tier available for early testing.</div>
+        <div class="card-features">
+          <span class="feature-tag">PostgreSQL</span>
+          <span class="feature-tag">Auth / JWT</span>
+          <span class="feature-tag">File Storage</span>
+          <span class="feature-tag">Realtime</span>
+          <span class="feature-tag">Row-Level Security</span>
+        </div>
+        <a class="source-link" href="https://supabase.com/pricing" target="_blank">↗ supabase.com/pricing</a>
+      </div>
+
+      <!-- Railway -->
+      <div class="card purple">
+        <div class="card-header">
+          <div class="card-name"><a href="https://railway.app/pricing" target="_blank">Railway</a></div>
+          <div class="card-cost">$5/mo (Hobby)</div>
+        </div>
+        <div class="card-role purple">Application Server</div>
+        <div class="card-desc">Hosts your Django app. Auto-deploys from GitHub on every push. Handles environment variables, background workers, and logging with minimal config.</div>
+        <div class="card-features">
+          <span class="feature-tag">Django / Python</span>
+          <span class="feature-tag">GitHub Deploy</span>
+          <span class="feature-tag">Background Workers</span>
+          <span class="feature-tag">Env Variables</span>
+        </div>
+        <a class="source-link" href="https://railway.app/pricing" target="_blank">↗ railway.app/pricing</a>
+      </div>
+
+      <!-- Stripe Connect -->
+      <div class="card pink">
+        <div class="card-header">
+          <div class="card-name"><a href="https://stripe.com/connect/pricing" target="_blank">Stripe Connect</a></div>
+          <div class="card-cost">2.9% + 30¢ per charge</div>
+        </div>
+        <div class="card-role pink">Payments & Payouts</div>
+        <div class="card-desc">Purpose-built for two-sided marketplaces. Vendors pay in, crew gets paid out, you keep a platform fee. Handles 1099 tax forms at year end automatically.</div>
+        <div class="card-features">
+          <span class="feature-tag">Escrow Hold</span>
+          <span class="feature-tag">Crew Payouts</span>
+          <span class="feature-tag">Platform Fee</span>
+          <span class="feature-tag">1099 Automation</span>
+          <span class="feature-tag">Instant Payouts</span>
+        </div>
+        <a class="source-link" href="https://stripe.com/connect/pricing" target="_blank">↗ stripe.com/connect/pricing</a>
+      </div>
+
+      <!-- Resend -->
+      <div class="card orange">
+        <div class="card-header">
+          <div class="card-name"><a href="https://resend.com/pricing" target="_blank">Resend</a></div>
+          <div class="card-cost">Free → $20/mo</div>
+        </div>
+        <div class="card-role orange">Email & Notifications</div>
+        <div class="card-desc">Transactional email for all platform events — job confirmations, applications, payment receipts, shift reminders, and crew notifications. Simple Django API integration.</div>
+        <div class="card-features">
+          <span class="feature-tag">Job Confirmations</span>
+          <span class="feature-tag">Crew Alerts</span>
+          <span class="feature-tag">Payment Receipts</span>
+          <span class="feature-tag">3k emails/mo free</span>
+          <span class="feature-tag">Django SDK</span>
+        </div>
+        <a class="source-link" href="https://resend.com/pricing" target="_blank">↗ resend.com/pricing</a>
+      </div>
+
+    </div>
+
+    <!-- Pricing Tables -->
+    <div class="pricing-section">
+
+      <!-- Combined Pricing -->
+      <div class="pricing-block">
+        <div class="pricing-block-header">
+          <div class="pricing-block-title">Service Pricing</div>
+          <div class="pricing-block-subtitle">Monthly cost comparison across tiers</div>
+        </div>
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th style="color:var(--accent);">Supabase</th>
+              <th style="color:var(--accent2);">Railway</th>
+              <th style="color:#ea580c;">Resend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--muted);font-size:11px;letter-spacing:0.05em;">Free</td>
+              <td><span class="tier-price free">$0 / mo</span></td>
+              <td><span class="tier-price free">$0 / mo</span></td>
+              <td><span class="tier-price free">$0 / mo</span></td>
+            </tr>
+            <tr class="tier-highlight">
+              <td style="color:var(--muted);font-size:11px;letter-spacing:0.05em;">Entry Paid</td>
+              <td><span class="tier-name" style="font-size:12px;">Pro</span> <span class="tier-price" style="display:block;margin-top:2px;">$25 / mo</span></td>
+              <td><span class="tier-name" style="font-size:12px;">Hobby</span> <span class="tier-price" style="display:block;margin-top:2px;">$5 / mo</span></td>
+              <td><span class="tier-name" style="font-size:12px;">Pro</span> <span class="tier-price" style="display:block;margin-top:2px;">$20 / mo</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:11px;letter-spacing:0.05em;">Growth</td>
+              <td><span class="tier-name" style="font-size:12px;">Team</span> <span class="tier-price" style="display:block;margin-top:2px;">$599 / mo</span></td>
+              <td><span class="tier-name" style="font-size:12px;">Pro</span> <span class="tier-price" style="display:block;margin-top:2px;">$20 / mo</span></td>
+              <td><span class="tier-name" style="font-size:12px;">Scale</span> <span class="tier-price" style="display:block;margin-top:2px;">$90 / mo</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:11px;letter-spacing:0.05em;">Enterprise</td>
+              <td><span class="tier-price custom">Custom</span></td>
+              <td><span class="tier-price custom">Custom</span></td>
+              <td><span class="tier-price custom">Custom</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Stripe Fee Breakdown -->
+      <div class="pricing-block">
+        <div class="pricing-block-header" style="justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div class="pricing-block-title">Stripe Connect — Fee Breakdown</div>
+            <div class="pricing-block-subtitle" id="stripe-subtitle">What the vendor is charged for 8 hrs × $50/hr</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label style="font-size:11px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">Hourly rate</label>
+              <div style="display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;">
+                <span style="font-size:13px;color:var(--muted);">$</span>
+                <input id="hourly-rate-input" type="number" min="1" step="1" value="50"
+                  style="width:52px;background:transparent;border:none;outline:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);text-align:right;-moz-appearance:textfield;" />
+                <span style="font-size:11px;color:var(--muted);">/hr</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <label style="font-size:11px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">Platform fee</label>
+              <div style="display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;">
+                <input id="platform-fee-input" type="number" min="0" max="100" step="0.1" value="1"
+                  style="width:52px;background:transparent;border:none;outline:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);text-align:right;-moz-appearance:textfield;" />
+                <span style="font-size:13px;color:var(--muted);">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="fee-table">
+          <colgroup>
+            <col style="width:28%">
+            <col style="width:36%">
+            <col style="width:18%">
+            <col style="width:18%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>What's Added</th>
+              <th style="text-align:right;">Amount Added</th>
+              <th style="text-align:right;">Running Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Crew must receive</td>
+              <td style="color:var(--muted);" id="base-desc">8 hrs × $50/hr</td>
+              <td style="text-align:right;">—</td>
+              <td style="text-align:right;"><span class="fee-running" id="base-total">$400.00</span></td>
+            </tr>
+            <tr>
+              <td>+ Stripe payout fee</td>
+              <td style="color:var(--muted);">0.25% + 25¢ per payout</td>
+              <td style="text-align:right;"><span class="fee-added" id="payout-fee-amount">+$1.25</span></td>
+              <td style="text-align:right;"><span class="fee-running" id="after-payout">$401.25</span></td>
+            </tr>
+            <tr>
+              <td>+ Stripe processing fee</td>
+              <td style="color:var(--muted);">2.9% + 30¢ per charge</td>
+              <td style="text-align:right;"><span class="fee-added" id="processing-fee-amount">+$12.00</span></td>
+              <td style="text-align:right;"><span class="fee-running" id="after-stripe">$413.25</span></td>
+            </tr>
+            <tr>
+              <td>+ Your platform fee</td>
+              <td style="color:var(--muted);" id="platform-fee-pct-label">0% of vendor total</td>
+              <td style="text-align:right;"><span class="fee-added" id="platform-fee-amount">+$0.00</span></td>
+              <td style="text-align:right;"><span class="fee-running" id="platform-fee-total">$413.25</span></td>
+            </tr>
+            <tr class="fee-row-final">
+              <td>Vendor is charged</td>
+              <td>Total fees collected</td>
+              <td style="text-align:right;" id="total-fees-added">+$13.25</td>
+              <td style="text-align:right;" id="vendor-total">$413.25</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="height:1px;background:var(--border);margin:24px 0;"></div>
+
+        <table class="fee-table" style="table-layout:fixed;">
+          <colgroup>
+            <col style="width:22%">
+            <col style="width:18%">
+            <col style="width:18%">
+            <col style="width:42%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Recipient</th>
+              <th style="text-align:right;">Amount ($)</th>
+              <th style="text-align:right;">Equiv. hrs</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;">Crew Member</td>
+              <td style="text-align:right;"><span class="fee-running" style="color:var(--accent);" id="result-crew">$400.00</span></td>
+              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-crew-hrs">8.00 hrs</td>
+              <td style="color:var(--muted);font-size:11px;">Guaranteed payout — fixed</td>
+            </tr>
+            <tr>
+              <td style="color:var(--accent3);font-family:'Syne',sans-serif;font-weight:700;">Stripe</td>
+              <td style="text-align:right;"><span class="fee-running" style="color:var(--accent3);" id="result-stripe">$13.25</span></td>
+              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-stripe-hrs">0.27 hrs</td>
+              <td style="color:var(--muted);font-size:11px;">Processing + payout fees</td>
+            </tr>
+            <tr>
+              <td style="color:var(--accent2);font-family:'Syne',sans-serif;font-weight:700;">Boothr</td>
+              <td style="text-align:right;"><span class="fee-running" style="color:var(--accent2);" id="result-boothr">$0.00</span></td>
+              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-boothr-hrs">0.00 hrs</td>
+              <td style="color:var(--muted);font-size:11px;" id="result-boothr-label">0% platform fee</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="stripe-note">
+          Stripe Connect has no monthly fixed fee — costs are purely transactional. This example reflects one crew member working an 8-hour shift at $50/hr. You collect the vendor total above, Stripe takes their cut, and that crew member receives their full $400.00. Fees scale per payout, so each crew member booked on a job runs through this same calculation independently.
+        </div>
+        <div style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
+          <i class="fa-solid fa-triangle-exclamation" style="color:#ca8a04;font-size:20px;margin-top:2px;flex-shrink:0;"></i>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#713f12;margin-bottom:5px;letter-spacing:0.03em;">
+              <i class="fa-solid fa-dollar-sign" style="margin-right:5px;"></i>$2.00 / active user / month
+            </div>
+            <div style="font-size:12.5px;color:#92400e;line-height:1.75;">
+              Stripe Connect also charges <strong>$2.00 per active connected account per month</strong>. An "active" account is any crew member who processes at least one transaction that month. At scale, this adds up — factor it into your per-crew pricing strategy.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const HOURS = 8;
+
+  function fmt(n)    { return '$' + n.toFixed(2); }
+  function fmtP(n)   { return '+$' + n.toFixed(2); }
+  function fmtH(n,r) { return (n / r).toFixed(2) + ' hrs'; }
+  function set(id, v) { document.getElementById(id).textContent = v; }
+
+  function recalc() {
+    const rate = parseFloat(document.getElementById('hourly-rate-input').value) || 50;
+    const pct  = parseFloat(document.getElementById('platform-fee-input').value) || 0;
+
+    const base         = parseFloat((HOURS * rate).toFixed(2));
+    const payoutFee    = parseFloat((base * 0.0025 + 0.25).toFixed(2));
+    const afterPayout  = parseFloat((base + payoutFee).toFixed(2));
+    const procFee      = parseFloat((afterPayout * 0.029 + 0.30).toFixed(2));
+    const afterStripe  = parseFloat((afterPayout + procFee).toFixed(2));
+    const stripeFees   = parseFloat((payoutFee + procFee).toFixed(2));
+    const platformAmt  = parseFloat((afterStripe * (pct / 100)).toFixed(2));
+    const vendorTotal  = parseFloat((afterStripe + platformAmt).toFixed(2));
+    const totalFees    = parseFloat((stripeFees + platformAmt).toFixed(2));
+
+    // subtitle
+    set('stripe-subtitle', `What the vendor is charged for ${HOURS} hrs × $${rate}/hr`);
+
+    // fee breakdown table
+    set('base-desc',              `${HOURS} hrs × $${rate}/hr`);
+    set('base-total',             fmt(base));
+
+    set('payout-fee-amount',      fmtP(payoutFee));
+    set('after-payout',           fmt(afterPayout));
+
+    set('processing-fee-amount',  fmtP(procFee));
+    set('after-stripe',           fmt(afterStripe));
+
+    set('platform-fee-pct-label', pct + '% of vendor total');
+    set('platform-fee-amount',    fmtP(platformAmt));
+    set('platform-fee-total',     fmt(vendorTotal));
+
+    set('total-fees-added',       fmtP(totalFees));
+    set('vendor-total',           fmt(vendorTotal));
+
+    // results table
+    set('result-crew',            fmt(base));
+    set('result-crew-hrs',        fmtH(base, rate));
+    set('result-stripe',          fmt(stripeFees));
+    set('result-stripe-hrs',      fmtH(stripeFees, rate));
+    set('result-boothr',          fmt(platformAmt));
+    set('result-boothr-hrs',      fmtH(platformAmt, rate));
+    set('result-boothr-label',    pct + '% platform fee on ' + fmt(vendorTotal));
+  }
+
+  document.getElementById('hourly-rate-input').addEventListener('input', recalc);
+  document.getElementById('platform-fee-input').addEventListener('input', recalc);
+  recalc();
+</script>
+</body>
+</html>
