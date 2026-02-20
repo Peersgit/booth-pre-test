@@ -17,7 +17,7 @@
       --accent2: #4f46e5;
       --accent3: #db2777;
       --text: #0f172a;
-      --muted: #64748b;
+      --muted: #303235;
       --line: rgba(5,150,105,0.08);
     }
 
@@ -77,9 +77,25 @@
       margin-top: 12px;
       color: var(--muted);
       font-size: 13px;
-      max-width: 500px;
       line-height: 1.7;
     }
+
+    .section-hero {
+      margin-top: 48px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .section-hero .label { margin-bottom: 12px; }
+    .section-hero h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text);
+      margin: 0;
+    }
+    .section-hero h2 span { color: var(--accent); }
+    .section-hero .subtitle { margin-top: 12px; }
 
     /* ── FLOW DIAGRAM ── */
     .diagram-section {
@@ -135,10 +151,11 @@
     .flow-node.user:hover { box-shadow: 0 6px 24px rgba(79,70,229,0.18); }
 
     .flow-node.django {
-      border-color: var(--accent);
-      box-shadow: 0 4px 16px rgba(5,150,105,0.1);
+      border-color: var(--accent2);
+      box-shadow: 0 4px 16px rgba(79,70,229,0.1);
       min-width: 280px;
     }
+    .flow-node.django:hover { box-shadow: 0 6px 24px rgba(79,70,229,0.18); }
 
     .node-name {
       font-family: 'Syne', sans-serif;
@@ -165,6 +182,7 @@
     .badge-purple { background: rgba(79,70,229,0.1); color: var(--accent2); }
     .badge-green  { background: rgba(5,150,105,0.1); color: var(--accent); }
     .badge-pink   { background: rgba(219,39,119,0.1); color: var(--accent3); }
+    .badge-orange { background: rgba(234,88,12,0.1); color: #ea580c; }
 
     /* Arrow */
     .arrow {
@@ -208,7 +226,7 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
-      max-width: 220px;
+      max-width: 280px;
     }
 
     .branch-arrow {
@@ -261,6 +279,8 @@
     }
 
     .card {
+      display: flex;
+      flex-direction: column;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -310,12 +330,6 @@
     }
     .card-name a:hover { border-color: var(--accent); color: var(--accent); }
 
-    .card-cost {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
     .card-role {
       font-size: 11px;
       letter-spacing: 0.1em;
@@ -332,29 +346,15 @@
       font-size: 12px;
       color: var(--muted);
       line-height: 1.7;
-    }
-
-    .card-features {
-      margin-top: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .feature-tag {
-      font-size: 10px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: rgba(0,0,0,0.04);
-      color: var(--muted);
-      border: 1px solid var(--border);
+      flex: 1;
     }
 
     .source-link {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      margin-top: 14px;
+      margin-top: auto;
+      padding-top: 14px;
       font-size: 11px;
       color: var(--muted);
       text-decoration: none;
@@ -448,6 +448,56 @@
     .tier-highlight {
       background: rgba(5,150,105,0.05) !important;
     }
+
+    /* Suggestion / tiered fee table */
+    .suggestion-block {
+      border-left: 3px solid var(--accent);
+      overflow: hidden;
+    }
+    .suggestion-block .suggestion-intro {
+      margin: 0;
+      padding: 20px 24px 16px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .suggestion-block .tier-table {
+      margin: 0;
+      font-size: 13px;
+    }
+    .suggestion-block .tier-table thead tr {
+      background: rgba(5,150,105,0.08);
+    }
+    .suggestion-block .tier-table th {
+      padding: 14px 24px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      border-bottom: 2px solid rgba(5,150,105,0.2);
+    }
+    .suggestion-block .tier-table td {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .suggestion-block .tier-table tbody tr:nth-child(even) {
+      background: rgba(0,0,0,0.02);
+    }
+    .suggestion-block .tier-table tbody tr:hover {
+      background: rgba(5,150,105,0.05);
+    }
+    .suggestion-block .tier-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .suggestion-block .tier-table .tier-fee {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--accent);
+    }
+
     .tier-highlight td:first-child {
       border-left: 3px solid var(--accent);
       padding-left: 13px;
@@ -476,7 +526,7 @@
     .fee-table thead tr { background: rgba(0,0,0,0.03); }
 
     .fee-table th {
-      padding: 10px 16px;
+      padding: 14px 20px;
       text-align: left;
       font-size: 10px;
       letter-spacing: 0.12em;
@@ -488,16 +538,16 @@
 
     /* Fixed column widths so nothing shifts on input change */
     .fee-table th:nth-child(1),
-    .fee-table td:nth-child(1) { width: 28%; }
+    .fee-table td:nth-child(1) { width: 38%; min-width: 0; }
     .fee-table th:nth-child(2),
-    .fee-table td:nth-child(2) { width: 34%; }
+    .fee-table td:nth-child(2) { width: 22%; min-width: 0; font-size: 11px; }
     .fee-table th:nth-child(3),
-    .fee-table td:nth-child(3) { width: 18%; text-align: right; }
+    .fee-table td:nth-child(3) { width: 20%; text-align: right; }
     .fee-table th:nth-child(4),
     .fee-table td:nth-child(4) { width: 20%; text-align: right; }
 
     .fee-table td {
-      padding: 12px 16px;
+      padding: 14px 20px;
       border-bottom: 1px solid var(--border);
       color: var(--text);
       vertical-align: middle;
@@ -516,6 +566,8 @@
       color: var(--accent3);
       border-top: 2px solid rgba(219,39,119,0.2);
     }
+
+    .fee-step-note { font-size: 11px; color: var(--muted); font-weight: 400; }
 
     .fee-added {
       color: var(--accent3);
@@ -566,22 +618,19 @@
 
       <!-- User -->
       <div class="flow-node user" style="min-width:260px;">
-        <div class="node-name">User (Browser)</div>
+        <div class="node-name">User (Frontend)</div>
         <div class="node-role">Vendor or Crew — mobile-friendly web</div>
-        <span class="node-badge badge-purple">HTML / CSS / JS</span>
       </div>
 
       <div class="arrow">
         <div class="arrow-line"></div>
-        <div class="arrow-label">HTTP requests</div>
         <div class="arrow-tip"></div>
       </div>
 
       <!-- Django -->
       <div class="flow-node django">
-        <div class="node-name">Railway — Django App</div>
-        <div class="node-role">Business logic · API · Webhooks · Workers</div>
-        <span class="node-badge badge-green">The Brain</span>
+        <div class="node-name">Backend</div>
+        <div class="node-role">Railway for hosting — Django for logic</div>
       </div>
 
       <!-- Horizontal connector -->
@@ -598,7 +647,7 @@
           <div class="branch-arrow"></div>
           <div class="flow-node" style="width:100%; text-align:center;">
             <div class="node-name" style="font-size:14px;">Supabase</div>
-            <div class="node-role">PostgreSQL · Auth · File Storage</div>
+            <div class="node-role">Database · Storage · Auth</div>
             <span class="node-badge badge-green">Data Layer</span>
           </div>
         </div>
@@ -608,7 +657,7 @@
           <div class="flow-node" style="width:100%; text-align:center;">
             <div class="node-name" style="font-size:14px;">Stripe Connect</div>
             <div class="node-role">Payments · Payouts · 1099s</div>
-            <span class="node-badge badge-purple">Money Layer</span>
+            <span class="node-badge badge-pink">Money Layer</span>
           </div>
         </div>
 
@@ -616,8 +665,8 @@
           <div class="branch-arrow"></div>
           <div class="flow-node" style="width:100%; text-align:center;">
             <div class="node-name" style="font-size:14px;">Resend</div>
-            <div class="node-role">Transactional Email · Notifications</div>
-            <span class="node-badge badge-pink">Comms Layer</span>
+            <div class="node-role">Emails · Notifications</div>
+            <span class="node-badge badge-orange">Comms Layer</span>
           </div>
         </div>
 
@@ -634,17 +683,10 @@
       <div class="card green">
         <div class="card-header">
           <div class="card-name"><a href="https://supabase.com/pricing" target="_blank">Supabase</a></div>
-          <div class="card-cost">$25/mo (Pro)</div>
         </div>
         <div class="card-role green">Database · Auth · Storage</div>
-        <div class="card-desc">Managed PostgreSQL, row-level security, built-in auth (email/OAuth), and file storage — all in one. Free tier available for early testing.</div>
-        <div class="card-features">
-          <span class="feature-tag">PostgreSQL</span>
-          <span class="feature-tag">Auth / JWT</span>
-          <span class="feature-tag">File Storage</span>
-          <span class="feature-tag">Realtime</span>
-          <span class="feature-tag">Row-Level Security</span>
-        </div>
+        <div class="card-desc">Loads of tools to our disposal (database mainly)</div>
+        
         <a class="source-link" href="https://supabase.com/pricing" target="_blank">↗ supabase.com/pricing</a>
       </div>
 
@@ -652,16 +694,10 @@
       <div class="card purple">
         <div class="card-header">
           <div class="card-name"><a href="https://railway.app/pricing" target="_blank">Railway</a></div>
-          <div class="card-cost">$5/mo (Hobby)</div>
         </div>
         <div class="card-role purple">Application Server</div>
-        <div class="card-desc">Hosts your Django app. Auto-deploys from GitHub on every push. Handles environment variables, background workers, and logging with minimal config.</div>
-        <div class="card-features">
-          <span class="feature-tag">Django / Python</span>
-          <span class="feature-tag">GitHub Deploy</span>
-          <span class="feature-tag">Background Workers</span>
-          <span class="feature-tag">Env Variables</span>
-        </div>
+        <div class="card-desc">Hosts our app. Easier to configure.</div>
+        
         <a class="source-link" href="https://railway.app/pricing" target="_blank">↗ railway.app/pricing</a>
       </div>
 
@@ -669,17 +705,10 @@
       <div class="card pink">
         <div class="card-header">
           <div class="card-name"><a href="https://stripe.com/connect/pricing" target="_blank">Stripe Connect</a></div>
-          <div class="card-cost">2.9% + 30¢ per charge</div>
         </div>
         <div class="card-role pink">Payments & Payouts</div>
-        <div class="card-desc">Purpose-built for two-sided marketplaces. Vendors pay in, crew gets paid out, you keep a platform fee. Handles 1099 tax forms at year end automatically.</div>
-        <div class="card-features">
-          <span class="feature-tag">Escrow Hold</span>
-          <span class="feature-tag">Crew Payouts</span>
-          <span class="feature-tag">Platform Fee</span>
-          <span class="feature-tag">1099 Automation</span>
-          <span class="feature-tag">Instant Payouts</span>
-        </div>
+        <div class="card-desc">Vendors pay in, crew gets paid out, we keep a platform fee. Handles 1099's automatically.</div>
+        
         <a class="source-link" href="https://stripe.com/connect/pricing" target="_blank">↗ stripe.com/connect/pricing</a>
       </div>
 
@@ -687,17 +716,10 @@
       <div class="card orange">
         <div class="card-header">
           <div class="card-name"><a href="https://resend.com/pricing" target="_blank">Resend</a></div>
-          <div class="card-cost">Free → $20/mo</div>
         </div>
         <div class="card-role orange">Email & Notifications</div>
-        <div class="card-desc">Transactional email for all platform events — job confirmations, applications, payment receipts, shift reminders, and crew notifications. Simple Django API integration.</div>
-        <div class="card-features">
-          <span class="feature-tag">Job Confirmations</span>
-          <span class="feature-tag">Crew Alerts</span>
-          <span class="feature-tag">Payment Receipts</span>
-          <span class="feature-tag">3k emails/mo free</span>
-          <span class="feature-tag">Django SDK</span>
-        </div>
+        <div class="card-desc">Job confirmations, applications, payment receipts, shift reminders, and crew notifications.</div>
+        
         <a class="source-link" href="https://resend.com/pricing" target="_blank">↗ resend.com/pricing</a>
       </div>
 
@@ -748,9 +770,17 @@
             </tr>
           </tbody>
         </table>
+        <p style="margin:0;padding:16px 24px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);">
+          At Entry Paid tier, total monthly cost is <strong style="color:var(--text);">$50/mo</strong> (<strong style="color:var(--text);">$600/yr</strong>)
+        </p>
       </div>
 
-      <!-- Stripe Fee Breakdown -->
+      <!-- Cost Calculator -->
+      <div class="section-hero">
+        <div class="label">// Calculator</div>
+        <h2>Stripe<span>.</span> Calculator</h2>
+        <p class="subtitle">Stripe fees and what the vendor pays for crew. Adjust hourly rate and platform fee below.</p>
+      </div>
       <div class="pricing-block">
         <div class="pricing-block-header" style="justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <div>
@@ -770,7 +800,7 @@
             <div style="display:flex;align-items:center;gap:8px;">
               <label style="font-size:11px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">Platform fee</label>
               <div style="display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;">
-                <input id="platform-fee-input" type="number" min="0" max="100" step="0.1" value="1"
+                <input id="platform-fee-input" type="number" min="0" max="100" step="0.1" value="15"
                   style="width:52px;background:transparent;border:none;outline:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);text-align:right;-moz-appearance:textfield;" />
                 <span style="font-size:13px;color:var(--muted);">%</span>
               </div>
@@ -780,47 +810,47 @@
 
         <table class="fee-table">
           <colgroup>
-            <col style="width:28%">
-            <col style="width:36%">
-            <col style="width:18%">
-            <col style="width:18%">
+            <col style="width:38%">
+            <col style="width:22%">
+            <col style="width:20%">
+            <col style="width:20%">
           </colgroup>
           <thead>
             <tr>
               <th>Step</th>
-              <th>What's Added</th>
+              <th>What's added</th>
               <th style="text-align:right;">Amount Added</th>
               <th style="text-align:right;">Running Total</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Crew must receive</td>
+              <td>+ Crew must receive</td>
               <td style="color:var(--muted);" id="base-desc">8 hrs × $50/hr</td>
               <td style="text-align:right;">—</td>
               <td style="text-align:right;"><span class="fee-running" id="base-total">$400.00</span></td>
             </tr>
             <tr>
-              <td>+ Stripe payout fee</td>
+              <td>+ Stripe payout fee<br><span class="fee-step-note">Stripe takes when crew is paid out.</span></td>
               <td style="color:var(--muted);">0.25% + 25¢ per payout</td>
               <td style="text-align:right;"><span class="fee-added" id="payout-fee-amount">+$1.25</span></td>
               <td style="text-align:right;"><span class="fee-running" id="after-payout">$401.25</span></td>
             </tr>
             <tr>
-              <td>+ Stripe processing fee</td>
+              <td>+ Our platform fee<br><span class="fee-step-note">The fee we take when the vendor is charged.</span></td>
+              <td style="color:var(--muted);" id="platform-fee-pct-label">0% of vendor total</td>
+              <td style="text-align:right;"><span class="fee-added" id="platform-fee-amount">+$0.00</span></td>
+              <td style="text-align:right;"><span class="fee-running" id="after-platform">$401.25</span></td>
+            </tr>
+            <tr>
+              <td>+ Stripe processing fee<br><span class="fee-step-note">Stripe takes when vendor is charged.</span></td>
               <td style="color:var(--muted);">2.9% + 30¢ per charge</td>
               <td style="text-align:right;"><span class="fee-added" id="processing-fee-amount">+$12.00</span></td>
               <td style="text-align:right;"><span class="fee-running" id="after-stripe">$413.25</span></td>
             </tr>
-            <tr>
-              <td>+ Your platform fee</td>
-              <td style="color:var(--muted);" id="platform-fee-pct-label">0% of vendor total</td>
-              <td style="text-align:right;"><span class="fee-added" id="platform-fee-amount">+$0.00</span></td>
-              <td style="text-align:right;"><span class="fee-running" id="platform-fee-total">$413.25</span></td>
-            </tr>
             <tr class="fee-row-final">
-              <td>Vendor is charged</td>
-              <td>Total fees collected</td>
+              <td></td>
+              <td></td>
               <td style="text-align:right;" id="total-fees-added">+$13.25</td>
               <td style="text-align:right;" id="vendor-total">$413.25</td>
             </tr>
@@ -840,7 +870,7 @@
             <tr>
               <th>Recipient</th>
               <th style="text-align:right;">Amount ($)</th>
-              <th style="text-align:right;">Equiv. hrs</th>
+              <th style="text-align:right;">$/hr</th>
               <th>Notes</th>
             </tr>
           </thead>
@@ -854,20 +884,20 @@
             <tr>
               <td style="color:var(--accent3);font-family:'Syne',sans-serif;font-weight:700;">Stripe</td>
               <td style="text-align:right;"><span class="fee-running" style="color:var(--accent3);" id="result-stripe">$13.25</span></td>
-              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-stripe-hrs">0.27 hrs</td>
+              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-stripe-hrs">—</td>
               <td style="color:var(--muted);font-size:11px;">Processing + payout fees</td>
             </tr>
             <tr>
               <td style="color:var(--accent2);font-family:'Syne',sans-serif;font-weight:700;">Boothr</td>
               <td style="text-align:right;"><span class="fee-running" style="color:var(--accent2);" id="result-boothr">$0.00</span></td>
-              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-boothr-hrs">0.00 hrs</td>
+              <td style="text-align:right;color:var(--muted);font-size:11px;" id="result-boothr-hrs">—</td>
               <td style="color:var(--muted);font-size:11px;" id="result-boothr-label">0% platform fee</td>
             </tr>
           </tbody>
         </table>
 
         <div class="stripe-note">
-          Stripe Connect has no monthly fixed fee — costs are purely transactional. This example reflects one crew member working an 8-hour shift at $50/hr. You collect the vendor total above, Stripe takes their cut, and that crew member receives their full $400.00. Fees scale per payout, so each crew member booked on a job runs through this same calculation independently.
+          This example reflects one crew member working a <span id="stripe-note-hours">8</span>-hour shift at $<span id="stripe-note-rate">50</span>/hr. We collect the vendor total above, Stripe takes their cut, and that crew member receives their full <span id="stripe-note-crew">$400.00</span>. Fees scale per payout, so each crew member booked on a job runs through this same calculation independently.
         </div>
         <div style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
           <i class="fa-solid fa-triangle-exclamation" style="color:#ca8a04;font-size:20px;margin-top:2px;flex-shrink:0;"></i>
@@ -876,10 +906,81 @@
               <i class="fa-solid fa-dollar-sign" style="margin-right:5px;"></i>$2.00 / active user / month
             </div>
             <div style="font-size:12.5px;color:#92400e;line-height:1.75;">
-              Stripe Connect also charges <strong>$2.00 per active connected account per month</strong>. An "active" account is any crew member who processes at least one transaction that month. At scale, this adds up — factor it into your per-crew pricing strategy.
+              Stripe Connect also charges <strong>$2.00 per active connected account per month</strong>. An "active" account is any crew member who processes at least one transaction that month. At scale, this adds up — factor it into our per-crew pricing strategy.
             </div>
           </div>
         </div>
+        <div style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
+          <i class="fa-solid fa-triangle-exclamation" style="color:#ca8a04;font-size:20px;margin-top:2px;flex-shrink:0;"></i>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#713f12;margin-bottom:5px;letter-spacing:0.03em;">
+              1099's
+            </div>
+            <div style="font-size:12.5px;color:#92400e;line-height:1.75;">
+              In most states crew must make $600 to receive a 1099; Stripe handles them automatically but it comes at a cost:
+            </div>
+            <ul style="margin:8px 0 0;padding-left:20px;font-size:12.5px;color:#92400e;line-height:1.9;">
+              <li>$2.99 per 1099 e-filed with IRS</li>
+              <li>$1.49 per 1099 e-filed with states</li>
+              <li>$2.99 per 1099 mailed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="section-title" style="margin-top:40px;">Suggestion</div>
+      <div class="pricing-block suggestion-block" style="margin-top:0;">
+        <p class="suggestion-intro">A tiered structure makes sense so vendors don't feel punished for high volume:</p>
+        <table class="pricing-table tier-table">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Spend tier</th>
+              <th style="text-align:right;">Suggested platform fee</th>
+              <th style="text-align:left;">Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>First $1,000/mo</td><td style="text-align:right;" class="tier-fee">15%</td><td>Low barrier to try the platform</td></tr>
+            <tr><td>$1,000–$5,000/mo</td><td style="text-align:right;" class="tier-fee">12%</td><td>Reward growing vendors</td></tr>
+            <tr><td>$5,000+/mo</td><td style="text-align:right;" class="tier-fee">10%</td><td>Lock in high-volume clients</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="section-title" style="margin-top:40px;">Competition</div>
+      <div class="pricing-block" style="margin-top:0;">
+        <div style="padding:20px 24px;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;">
+            <a href="https://www.wonolo.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Wonolo</a>
+            <span style="font-weight:500;color:var(--muted);font-size:12px;margin-left:8px;">45% processing fee</span>
+          </div>
+          <p style="margin:0 0 12px;font-size:12.5px;color:var(--text);line-height:1.7;">
+            Similar on-demand labor model but not niche-specific. Wonolo serves broad temp staffing; Boothr is built for expo and event booth crew.
+          </p>
+          <a href="https://www.wonolo.com/" target="_blank" rel="noopener" style="font-size:11px;color:var(--muted);letter-spacing:0.05em;">↗ wonolo.com</a>
+        </div>
+      </div>
+
+      <div class="section-title" style="margin-top:40px;">Nomenclature</div>
+      <div class="pricing-block" style="margin-top:0;">
+        <table class="pricing-table" style="margin:0;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Term</th>
+              <th style="text-align:left;">Definition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Boothr</strong></td><td>Company and product name.</td></tr>
+            <tr><td><strong>Boothlink</strong></td><td>Notification system (e.g. “Boothlink inbound” when a crew member is accepted to a link).</td></tr>
+            <tr><td><strong>Vendor</strong></td><td>Company looking to hire.</td></tr>
+            <tr><td><strong>Crew member</strong></td><td>Individual trying to get work.</td></tr>
+            <tr><td><strong>Installer Crew</strong></td><td>Hands-on booth assembly, installation, and teardown.</td></tr>
+            <tr><td><strong>Floor Crew</strong></td><td>Frontline booth support — greeting attendees, distributing swag, and keeping the floor moving. Can become a pro.</td></tr>
+            <tr><td><strong>Pro Crew</strong></td><td>Brand specialists with deep product knowledge who can sell, demo, and represent vendors at the highest level. Can become a rep.</td></tr>
+            <tr><td><strong>Link</strong></td><td>A job (links are what vendors post and crew apply to).</td></tr>
+          </tbody>
+        </table>
       </div>
 
     </div>
@@ -892,22 +993,50 @@
 
   function fmt(n)    { return '$' + n.toFixed(2); }
   function fmtP(n)   { return '+$' + n.toFixed(2); }
-  function fmtH(n,r) { return (n / r).toFixed(2) + ' hrs'; }
+  function fmtPerHr(n) { return '$' + (n / HOURS).toFixed(2) + '/hr'; }
   function set(id, v) { document.getElementById(id).textContent = v; }
+
+  function calculateVendorCharge(hourlyRate, hours, platformPct) {
+    const crewMustReceive = hourlyRate * hours;
+
+    // Step 1: gross up for payout fee
+    const afterPayoutFee = (crewMustReceive + 0.25) / (1 - 0.0025);
+
+    // Step 2: gross up for platform fee
+    const afterPlatformFee = platformPct === 0 ? afterPayoutFee : afterPayoutFee / (1 - platformPct / 100);
+
+    // Step 3: gross up for processing fee
+    const vendorCharge = (afterPlatformFee + 0.30) / (1 - 0.029);
+
+    // Verify breakdown
+    const processingFee = vendorCharge * 0.029 + 0.30;
+    const afterProcessing = vendorCharge - processingFee;
+    const platformAmt = afterProcessing - afterPayoutFee;
+    const payoutFee = afterPayoutFee * 0.0025 + 0.25;
+    const crewReceives = afterPayoutFee - payoutFee;
+
+    return {
+      crewMustReceive,
+      vendorCharge,
+      afterPayoutFee,
+      processingFee,
+      platformAmt,
+      payoutFee,
+      crewReceives,
+      stripeFees: processingFee + payoutFee
+    };
+  }
 
   function recalc() {
     const rate = parseFloat(document.getElementById('hourly-rate-input').value) || 50;
-    const pct  = parseFloat(document.getElementById('platform-fee-input').value) || 0;
+    const pct  = parseFloat(document.getElementById('platform-fee-input').value) || 15;
 
-    const base         = parseFloat((HOURS * rate).toFixed(2));
-    const payoutFee    = parseFloat((base * 0.0025 + 0.25).toFixed(2));
-    const afterPayout  = parseFloat((base + payoutFee).toFixed(2));
-    const procFee      = parseFloat((afterPayout * 0.029 + 0.30).toFixed(2));
-    const afterStripe  = parseFloat((afterPayout + procFee).toFixed(2));
-    const stripeFees   = parseFloat((payoutFee + procFee).toFixed(2));
-    const platformAmt  = parseFloat((afterStripe * (pct / 100)).toFixed(2));
-    const vendorTotal  = parseFloat((afterStripe + platformAmt).toFixed(2));
-    const totalFees    = parseFloat((stripeFees + platformAmt).toFixed(2));
+    const base = rate * HOURS;
+    const calc = calculateVendorCharge(rate, HOURS, pct);
+
+    const vendorTotal  = parseFloat(calc.vendorCharge.toFixed(2));
+    const platformAmt  = parseFloat(calc.platformAmt.toFixed(2));
+    const totalFees    = parseFloat((calc.stripeFees + platformAmt).toFixed(2));
 
     // subtitle
     set('stripe-subtitle', `What the vendor is charged for ${HOURS} hrs × $${rate}/hr`);
@@ -916,27 +1045,32 @@
     set('base-desc',              `${HOURS} hrs × $${rate}/hr`);
     set('base-total',             fmt(base));
 
-    set('payout-fee-amount',      fmtP(payoutFee));
-    set('after-payout',           fmt(afterPayout));
-
-    set('processing-fee-amount',  fmtP(procFee));
-    set('after-stripe',           fmt(afterStripe));
+    set('payout-fee-amount',      fmtP(calc.payoutFee));
+    set('after-payout',           fmt(parseFloat(calc.afterPayoutFee.toFixed(2))));
 
     set('platform-fee-pct-label', pct + '% of vendor total');
     set('platform-fee-amount',    fmtP(platformAmt));
-    set('platform-fee-total',     fmt(vendorTotal));
+    const afterProcessing = parseFloat((vendorTotal - calc.processingFee).toFixed(2));
+    set('after-platform',         fmt(afterProcessing));
+
+    set('processing-fee-amount',  fmtP(calc.processingFee));
+    set('after-stripe',           fmt(vendorTotal));
 
     set('total-fees-added',       fmtP(totalFees));
     set('vendor-total',           fmt(vendorTotal));
 
     // results table
     set('result-crew',            fmt(base));
-    set('result-crew-hrs',        fmtH(base, rate));
-    set('result-stripe',          fmt(stripeFees));
-    set('result-stripe-hrs',      fmtH(stripeFees, rate));
+    set('result-crew-hrs',        '$' + rate.toFixed(2) + '/hr');
+    set('result-stripe',          fmt(calc.stripeFees));
+    set('result-stripe-hrs',      fmtPerHr(calc.stripeFees));
     set('result-boothr',          fmt(platformAmt));
-    set('result-boothr-hrs',      fmtH(platformAmt, rate));
-    set('result-boothr-label',    pct + '% platform fee on ' + fmt(vendorTotal));
+    set('result-boothr-hrs',      fmtPerHr(platformAmt));
+    set('result-boothr-label',    pct + '% of ' + fmt(vendorTotal));
+
+    set('stripe-note-hours', HOURS);
+    set('stripe-note-rate',  rate);
+    set('stripe-note-crew',  fmt(base));
   }
 
   document.getElementById('hourly-rate-input').addEventListener('input', recalc);
