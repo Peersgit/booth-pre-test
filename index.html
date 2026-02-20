@@ -590,15 +590,128 @@
       line-height: 1.75;
     }
 
+    .stripe-inputs { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .stripe-input-group { display: flex; align-items: center; gap: 8px; }
+    .stripe-input-group label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; white-space: nowrap; }
+    .stripe-input-wrap { display: flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; min-height: 40px; }
+    .stripe-input-wrap input { width: 52px; background: transparent; border: none; outline: none; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--text); text-align: right; -moz-appearance: textfield; }
+
+    .fee-table-results th:nth-child(1),
+    .fee-table-results td:nth-child(1) { width: 16%; min-width: 0; }
+    .fee-table-results th:nth-child(2),
+    .fee-table-results td:nth-child(2) { width: 18%; }
+    .fee-table-results th:nth-child(3),
+    .fee-table-results td:nth-child(3) { width: 18%; }
+    .fee-table-results th:nth-child(4),
+    .fee-table-results td:nth-child(4) { width: 48%; min-width: 0; }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 600px) {
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .table-wrap .pricing-table,
+    .table-wrap .fee-table,
+    .table-wrap .tier-table { min-width: 280px; }
+
+    @media (max-width: 900px) {
+      .branch-row { flex-wrap: wrap; justify-content: center; gap: 12px; }
+      .branch-item { flex: 1 1 200px; max-width: 100%; }
+      .flow-node.django { min-width: 0; width: 100%; max-width: 320px; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 32px 16px; }
+      header { margin-bottom: 40px; }
+      .label { font-size: 10px; letter-spacing: 0.15em; }
+      h1 { font-size: clamp(1.6rem, 5vw, 2.5rem); }
+      .subtitle { font-size: 12px; margin-top: 10px; }
+      .section-hero { margin-top: 32px; margin-bottom: 24px; }
+      .section-hero h2 { font-size: clamp(1.5rem, 5vw, 2.2rem); }
+      .diagram-section { margin-bottom: 48px; }
+      .section-title { font-size: 10px; margin-bottom: 20px; gap: 8px; }
+      .flow-node { padding: 14px 18px; width: 100%; max-width: 100%; min-width: 0; }
+      .flow-node.user { min-width: 0; width: 100%; max-width: 100%; }
+      .flow-node.django { min-width: 0; width: 100%; max-width: 100%; }
+      .node-name { font-size: 15px; }
+      .node-role { font-size: 10px; }
+      .arrow { height: 36px; }
       .branch-row { flex-direction: column; align-items: center; }
       .h-connector { display: none; }
-      .branch-item { max-width: 100%; width: 100%; }
+      .branch-item { max-width: 100%; width: 100%; flex: none; }
+      .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+      .card { padding: 18px; }
+      .card-name { font-size: 16px; }
+      .pricing-section { margin-top: 32px; gap: 24px; }
+      .pricing-block-header {
+        padding: 14px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .pricing-block-header.stripe-calc-header { flex-direction: column; align-items: stretch; gap: 16px; }
+      .stripe-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; width: 100%; }
+      .stripe-input-group { display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+      .stripe-input-group label { font-size: 10px; }
+      .stripe-input-wrap { width: 100%; min-width: 0; justify-content: flex-end; }
+      .stripe-input-wrap input { flex: 1; min-width: 44px; width: auto; }
+      .pricing-footnote { padding: 14px 18px !important; font-size: 12px !important; }
+      .pricing-table th, .pricing-table td { padding: 10px 12px; font-size: 11px; }
+      .pricing-table th { font-size: 9px; }
+      .fee-table th, .fee-table td { padding: 10px 12px; font-size: 11px; }
+      .fee-table th { font-size: 9px; }
+      .fee-table th:nth-child(1), .fee-table td:nth-child(1) { width: 32%; }
+      .fee-step-note { font-size: 10px; }
+      .stripe-note { padding: 14px 16px; font-size: 12px; }
+      .warning-box { padding: 16px 18px !important; gap: 12px; }
+      .warning-box .fa-triangle-exclamation { font-size: 18px !important; }
+      .block-inner { padding: 18px 20px !important; }
+      .suggestion-block .suggestion-intro { padding: 16px 18px 12px; font-size: 12px; }
+      .suggestion-block .tier-table th,
+      .suggestion-block .tier-table td { padding: 12px 16px; font-size: 12px; }
+      .tier-highlight td:first-child { padding-left: 13px; }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 24px 12px; }
+      header { margin-bottom: 32px; }
+      .section-title::after { min-width: 20px; }
+      .pricing-block { border-radius: 8px; }
+      .pricing-block-header { padding: 12px 14px; }
+      .pricing-block-title { font-size: 13px; }
+      .pricing-block-subtitle { font-size: 10px; }
+      .table-wrap .pricing-table,
+      .table-wrap .fee-table,
+      .table-wrap .tier-table { min-width: 260px; }
+      .fee-table th:nth-child(2), .fee-table td:nth-child(2) { font-size: 10px; }
+      .fee-row-final td { font-size: 12px; }
+      .stripe-note { padding: 12px 14px; font-size: 11.5px; }
+      .warning-box { padding: 14px 16px !important; }
+      .block-inner { padding: 14px 16px !important; }
+      .section-title { margin-top: 32px !important; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 20px 10px; }
+      .flow-node { padding: 12px 14px; }
+      .node-name { font-size: 14px; }
+      .card { padding: 16px; }
+      .card-desc { font-size: 11px; }
+      .source-link { font-size: 10px; padding-top: 12px; }
+      .pricing-table th, .pricing-table td { padding: 8px 10px; font-size: 10px; }
+      .pricing-footnote { padding: 10px 12px !important; font-size: 11px !important; }
+      .fee-table th, .fee-table td { padding: 8px 10px; font-size: 10px; }
+      .tier-name { font-size: 12px; }
+      .tier-price { white-space: normal; }
+      .stripe-inputs { grid-template-columns: 1fr; }
+      .fee-table-results th:nth-child(1),
+      .fee-table-results td:nth-child(1) { width: 14%; }
+      .fee-table-results th:nth-child(4),
+      .fee-table-results td:nth-child(4) { width: 50%; }
     }
   </style>
 </head>
@@ -607,7 +720,7 @@
 
   <header>
     <div class="label">// Phase 0 — MVP Stack</div>
-    <h1>Boothr<span>.</span><br>Tech Architecture</h1>
+    <h1>Boothr<span>.</span></h1>
     <p class="subtitle">How every service connects, what it costs, and where to learn more. Built for a Django-first, mobile-friendly web app.</p>
   </header>
 
@@ -734,6 +847,7 @@
           <div class="pricing-block-title">Service Pricing</div>
           <div class="pricing-block-subtitle">Monthly cost comparison across tiers</div>
         </div>
+        <div class="table-wrap">
         <table class="pricing-table">
           <thead>
             <tr>
@@ -770,7 +884,8 @@
             </tr>
           </tbody>
         </table>
-        <p style="margin:0;padding:16px 24px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);">
+        </div>
+        <p class="pricing-footnote" style="margin:0;padding:16px 24px;font-size:12.5px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);">
           At Entry Paid tier, total monthly cost is <strong style="color:var(--text);">$50/mo</strong> (<strong style="color:var(--text);">$600/yr</strong>)
         </p>
       </div>
@@ -782,32 +897,31 @@
         <p class="subtitle">Stripe fees and what the vendor pays for crew. Adjust hourly rate and platform fee below.</p>
       </div>
       <div class="pricing-block">
-        <div class="pricing-block-header" style="justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div class="pricing-block-header stripe-calc-header" style="justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <div>
             <div class="pricing-block-title">Stripe Connect — Fee Breakdown</div>
-            <div class="pricing-block-subtitle" id="stripe-subtitle">What the vendor is charged for 8 hrs × $50/hr</div>
+            <div class="pricing-block-subtitle" id="stripe-subtitle">What the vendor is charged for 8 hrs x $50/hr</div>
           </div>
-          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <label style="font-size:11px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">Hourly rate</label>
-              <div style="display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;">
+          <div class="stripe-inputs">
+            <div class="stripe-input-group">
+              <label for="hourly-rate-input">Hourly rate</label>
+              <div class="stripe-input-wrap">
                 <span style="font-size:13px;color:var(--muted);">$</span>
-                <input id="hourly-rate-input" type="number" min="1" step="1" value="50"
-                  style="width:52px;background:transparent;border:none;outline:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);text-align:right;-moz-appearance:textfield;" />
+                <input id="hourly-rate-input" type="number" min="1" step="1" value="50" />
                 <span style="font-size:11px;color:var(--muted);">/hr</span>
               </div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <label style="font-size:11px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">Platform fee</label>
-              <div style="display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;">
-                <input id="platform-fee-input" type="number" min="0" max="100" step="0.1" value="15"
-                  style="width:52px;background:transparent;border:none;outline:none;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text);text-align:right;-moz-appearance:textfield;" />
+            <div class="stripe-input-group">
+              <label for="platform-fee-input">Platform fee</label>
+              <div class="stripe-input-wrap">
+                <input id="platform-fee-input" type="number" min="0" max="100" step="0.1" value="15" />
                 <span style="font-size:13px;color:var(--muted);">%</span>
               </div>
             </div>
           </div>
         </div>
 
+        <div class="table-wrap">
         <table class="fee-table">
           <colgroup>
             <col style="width:38%">
@@ -856,15 +970,17 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <div style="height:1px;background:var(--border);margin:24px 0;"></div>
 
-        <table class="fee-table" style="table-layout:fixed;">
+        <div class="table-wrap">
+        <table class="fee-table fee-table-results" style="table-layout:fixed;">
           <colgroup>
-            <col style="width:22%">
+            <col style="width:16%">
             <col style="width:18%">
             <col style="width:18%">
-            <col style="width:42%">
+            <col style="width:48%">
           </colgroup>
           <thead>
             <tr>
@@ -895,11 +1011,12 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <div class="stripe-note">
           This example reflects one crew member working a <span id="stripe-note-hours">8</span>-hour shift at $<span id="stripe-note-rate">50</span>/hr. We collect the vendor total above, Stripe takes their cut, and that crew member receives their full <span id="stripe-note-crew">$400.00</span>. Fees scale per payout, so each crew member booked on a job runs through this same calculation independently.
         </div>
-        <div style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
+        <div class="warning-box" style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
           <i class="fa-solid fa-triangle-exclamation" style="color:#ca8a04;font-size:20px;margin-top:2px;flex-shrink:0;"></i>
           <div>
             <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#713f12;margin-bottom:5px;letter-spacing:0.03em;">
@@ -910,7 +1027,7 @@
             </div>
           </div>
         </div>
-        <div style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
+        <div class="warning-box" style="margin:0;padding:20px 24px;background:#fefce8;border-top:3px solid #eab308;display:flex;gap:16px;align-items:flex-start;">
           <i class="fa-solid fa-triangle-exclamation" style="color:#ca8a04;font-size:20px;margin-top:2px;flex-shrink:0;"></i>
           <div>
             <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:#713f12;margin-bottom:5px;letter-spacing:0.03em;">
@@ -930,6 +1047,7 @@
       <div class="section-title" style="margin-top:40px;">Suggestion</div>
       <div class="pricing-block suggestion-block" style="margin-top:0;">
         <p class="suggestion-intro">A tiered structure makes sense so vendors don't feel punished for high volume:</p>
+        <div class="table-wrap">
         <table class="pricing-table tier-table">
           <thead>
             <tr>
@@ -944,12 +1062,13 @@
             <tr><td>$5,000+/mo</td><td style="text-align:right;" class="tier-fee">10%</td><td>Lock in high-volume clients</td></tr>
           </tbody>
         </table>
+        </div>
       </div>
 
 
       <div class="section-title" style="margin-top:40px;">Competition</div>
       <div class="pricing-block" style="margin-top:0;">
-        <div style="padding:20px 24px;">
+        <div class="block-inner" style="padding:20px 24px;">
           <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;">
             <a href="https://www.wonolo.com/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">Wonolo</a>
             <span style="font-weight:500;color:var(--muted);font-size:12px;margin-left:8px;">45% processing fee</span>
@@ -963,6 +1082,7 @@
 
       <div class="section-title" style="margin-top:40px;">Nomenclature</div>
       <div class="pricing-block" style="margin-top:0;">
+        <div class="table-wrap">
         <table class="pricing-table" style="margin:0;">
           <thead>
             <tr>
@@ -981,6 +1101,7 @@
             <tr><td><strong>Link</strong></td><td>A job (links are what vendors post and crew apply to).</td></tr>
           </tbody>
         </table>
+        </div>
       </div>
 
     </div>
